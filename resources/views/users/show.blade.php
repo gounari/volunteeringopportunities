@@ -10,6 +10,8 @@
     <li>Name: {{ $user->name }}</li>
     <li>Email: {{ $user->email }}</li>
     <li>Country: {{ $user->country }}</li>
+    <li>Profile Type: {{ $user->profile_type }}</li>
+
 </ul>
 
 @endsection
