@@ -27,11 +27,12 @@ class PostController extends Controller
     public function create()
     {
         $organizations = Organization::all();
-        $users = [];
+        
+        $c = collect();
         foreach ($organizations as $organization) {
-            array_push($users, $organization->user->name);
+            $c->add($organization->user);
         }
-        $names = collect($users)->sort()->toArray();
+        $names = collect($c)->sortBy('name');
 
         return view('posts.create', ['organizations' => $names]);
     }
@@ -64,8 +65,7 @@ class PostController extends Controller
         $post->organization_id = $validatedData['organization_id'];
         $post->save();
 
-        session()->flash('message', 'Post was created.');
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')->with('message', 'Post was created.');
     }
 
     /**

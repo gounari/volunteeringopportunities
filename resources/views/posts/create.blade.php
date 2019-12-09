@@ -14,8 +14,8 @@
     <p>Organization: 
         <select name="organization_id">
             @foreach ($organizations as $organization)
-            <option value="{{ $organization }}">
-                {{ $organization }}
+            <option value="{{ $organization->profile_id }}">
+                {{ $organization->name }}
             </option>>
             @endforeach
         </select>
