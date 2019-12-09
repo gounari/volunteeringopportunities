@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -36,7 +36,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:225',
+            'country' => 'required|max:225',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'description' => 'required|max:225',
+            'application_url' => 'required|max:225',
+            'organization_id' => 'required|integer',
+        ]);
+
+        $post = new Post;
+        $post->title = $validatedData['title'];
+        $post->country = $validatedData['country'];
+        $post->start_date = $validatedData['start_date'];
+        $post->end_date = $validatedData['end_date'];
+        $post->description = $validatedData['description'];
+        $post->application_url = $validatedData['application_url'];
+        $post->organization_id = $validatedData['organization_id'];
+        $post->save();
+
+        session()->flash('message', 'Post was created.');
+        return redirect()->route('posts.index');
     }
 
     /**
