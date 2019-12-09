@@ -11,7 +11,16 @@
     <p>End Date: <input type="text" name="end_date" value="{{ old('end_date') }}"></p>
     <p>Description: <input type="text" name="description" value="{{ old('description') }}"></p>
     <p>Apply: <input type="text" name="application_url" value="{{ old('application_url') }}"></p>
-    <p>Organization: <input type="text" name="organization_id" value="{{ old('organization_id') }}"></p>
+    <p>Organization: 
+        <select name="organization_id">
+            @foreach ($organizations as $organization)
+            <option value="{{ $organization }}">
+                {{ $organization }}
+            </option>>
+            @endforeach
+        </select>
+    </p>
+
     <input type="submit" name="Submit">
     <a href="{{ route('posts.index') }}">Cancel</a>
 </form>

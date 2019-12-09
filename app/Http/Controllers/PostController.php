@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Organization;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,14 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $organizations = Organization::all();
+        $users = [];
+        foreach ($organizations as $organization) {
+            array_push($users, $organization->user->name);
+        }
+        $names = collect($users)->sort()->toArray();
+
+        return view('posts.create', ['organizations' => $names]);
     }
 
     /**
