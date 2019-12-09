@@ -17,7 +17,7 @@
 </ul>
 
 <form method="POST"
-    action="{{ route('posts.destroy', ['id' => $post->id]) }}">
+    action="{{ route('posts.destroy', ['post' => $post]) }}">
     @csrf
     @method('DELETE')
     <button type="submit">Delete</button>
