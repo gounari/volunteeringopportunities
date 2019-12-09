@@ -16,4 +16,12 @@
     <li>Organization: {{ $post->organization->user->name }}</li>
 </ul>
 
+<form method="POST"
+    action="{{ route('posts.destroy', ['id' => $post->id]) }}">
+    @csrf
+    @method('DELETE')
+    <button type="submit">Delete</button>
+</form>
+
+<a href="{{ route('posts.index') }}">Back</a>
 @endsection
