@@ -61,8 +61,25 @@
                             </div>
                         </div>
 
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-md-4 col-form-label text-md-right">I am</legend>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="type" id="volunteer" value="volunteer" checked>
+                                                <label class="form-check-label" for="volunteer">
+                                                    a volunteer
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="type" id="organization" value="organization">
+                                                <label class="form-check-label" for="organization">
+                                                    an organization
+                                                </label>
+                                            </div>
+
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-7 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>

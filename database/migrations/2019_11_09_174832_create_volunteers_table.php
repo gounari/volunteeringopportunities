@@ -15,13 +15,13 @@ class CreateVolunteersTable extends Migration
     {
         Schema::create('volunteers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('last_name');
-            $table->longText('about_me');
-            $table->json('languages');
-            $table->string('occupation');
-            $table->string('facebook_url');
-            $table->string('instagram_url');
-            $table->string('twitter_url');
+            $table->string('last_name')->nullable();
+            $table->longText('about_me')->nullable();
+            $table->json('languages')->nullable();
+            $table->string('occupation')->nullable();
+            $table->string('facebook_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('twitter_url')->nullable();
             $table->timestamps();
         });
     }

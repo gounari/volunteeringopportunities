@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Organization;
 use App\User;
+use App\Volunteer;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -63,10 +65,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if($data['type'] == 'volunteer'){
+            $volunteer = Volunteer::create();
+            $prof_id = $volunteer->id;
+            $prof_type = "App\Volunteer";
+        }
+        else
+        {
+            $organization = Organization::create();
+            $prof_id = $organization->id;
+            $prof_type = "App\Organization";
+        } 
+
+        $user = new User;
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->profile_id = $prof_id;
+        $user->profile_type = $prof_type;
+        $user->save();
+        return $user;
     }
 }
