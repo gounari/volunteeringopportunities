@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('/users', 'UserController@index')->name('users.index');
 Route::get('/users/{user}', 'UserController@show')->name('users.show');
 
-Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/posts', 'PostController@index')->name('posts.index')->middleware('organization');
 Route::get('/posts/create', 'PostController@create')->name('posts.create');
 Route::post('/posts', 'PostController@store')->name('posts.store');
 Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
@@ -27,16 +27,4 @@ Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
