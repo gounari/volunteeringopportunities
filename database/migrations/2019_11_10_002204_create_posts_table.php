@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->longText('description');
+            $table->binary('image');
             $table->string('application_url');
             $table->timestamps();
 

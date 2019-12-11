@@ -64,14 +64,14 @@
             @foreach ($posts as $post)
                 <!-- Blog Post -->
                 <div class="card mb-4">
-                    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    <img class="card-img-top" src="../images/{{ $post->image }}" alt="Opportunity image">
                     <div class="card-body">
                         <h2 class="card-title">{{ $post->title }}</h2>
                         <p class="card-text">{{ $post->description }}</p>
                         <a href="{{ route('posts.show', ['post' => $post]) }}" class="btn btn-primary">Read More &rarr;</a>
                     </div>
                     <div class="card-footer text-muted">
-                        Posted on January 1, 2017 by
+                        Posted on {{ \Carbon\Carbon::parse($user->created_at ?? '')->isoFormat('Do MMMM YYYY [at] h:mm a')}} by
                         <a href="#">{{ $post->organization->user->name }}</a>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'start_date' => $startDate,
         'end_date' => $endDate,
         'description' => $faker->realText(),
+        'image' => $faker->image(public_path('images'),640,480, 'nature', false),
         'application_url' => $faker->unique()->url,
         'organization_id' => Organization::inRandomOrder()->first(),
     ];
