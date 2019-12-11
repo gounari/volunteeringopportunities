@@ -20,7 +20,7 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show');
 
 Route::get('/comments', 'CommentController@page')->name('comments.index');
 
-Route::get('/posts', 'PostController@index')->name('posts.index')->middleware('organization');
+Route::get('/posts', 'PostController@index')->name('posts.index');
 Route::get('/posts/create', 'PostController@create')->name('posts.create');
 Route::post('/posts', 'PostController@store')->name('posts.store');
 Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
