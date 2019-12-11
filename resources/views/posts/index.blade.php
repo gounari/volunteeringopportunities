@@ -56,8 +56,7 @@
       <!-- Blog Entries Column -->
        <div class="col-md-8">
 
-        <h1 class="my-4">Volunteering Opportunities
-          <small>by most recent</small>
+        <h1 class="my-4">
         </h1>
 
         <ul>
@@ -86,6 +85,55 @@
           <li class="page-item disabled">
           </li>
         </ul>
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+      <!-- Search Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Add opportunity</h5>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input class="form-control" id="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input class="form-control" id="country" placeholder="Country">
+            </div>
+            <div class="form-group">
+              <label for="start_date">Start Date</label>
+              <input class="form-control" id="start_date" placeholder="Start Date">
+            </div>
+            <div class="form-group">
+              <label for="end_date">End Date</label>
+              <input class="form-control" id="end_date" placeholder="End Date">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control" id="description" placeholder="Describe the opportunity..." rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="application_url">Application URL</label>
+              <input class="form-control" id="application_url" placeholder="Application URL">
+            </div>
+            <div class="form-group">
+              <div class="name">Add Image</div>
+              <div class="value">
+                  <div class="input-group js-input-file">
+                      <input class="input-file" type="file" name="file_cv" id="file">
+                  </div>
+              </div>
+            <span class="input-group-btn">
+              <div class="my-3">
+                <button class="btn btn-primary" type="button">Add</button>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
 
       </div>
 
