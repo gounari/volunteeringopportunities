@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function page() {
+        return view('posts.index');
+    }
+
+    public function apiIndex()
+    {
+        $posts = Post::with('organization.user')->get();
+        return $posts;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +25,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
-        return view('posts.index', ['posts' => $posts]);
+        //$posts = Post::paginate(5);
+        //return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -26,6 +36,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        /*
         $organizations = Organization::all();
         
         $c = collect();
@@ -35,6 +46,7 @@ class PostController extends Controller
         $names = collect($c)->sortBy('name');
 
         return view('posts.create', ['organizations' => $names]);
+        */
     }
 
     /**
@@ -45,6 +57,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         $validatedData = $request->validate([
             'title' => 'required|max:225',
             'country' => 'required|max:225',
@@ -66,6 +79,7 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('posts.index')->with('message', 'Post was created.');
+        */
     }
 
     /**
@@ -110,8 +124,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        //$post->delete();
 
-        return redirect()->route('posts.index')->with('message', 'Post was deleted.');
+        //return redirect()->route('posts.index')->with('message', 'Post was deleted.');
     }
 }
