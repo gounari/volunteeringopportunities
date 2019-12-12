@@ -177,7 +177,7 @@
           },
           show: function (post) {
             var id = post.id;
-            return "{{ route('posts.show', ['post' => "@id"]) }}"
+            return "{{ route('posts.show', ['post' => 0]) }}" + id;
           }
         }
     });
