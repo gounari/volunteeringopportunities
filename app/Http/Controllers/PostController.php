@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Organization;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -14,8 +13,31 @@ class PostController extends Controller
 
     public function apiIndex()
     {
-        $posts = Post::with('organization.user')->get();
-        return $posts;
+        return Post::orderBy('created_at', 'DESC')->get();
+    }
+
+    public function apiStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:225',
+            'country' => 'required|max:225',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'description' => 'required|max:225',
+            'application_url' => 'required|max:225',
+        ]);
+
+        $post = new Post;
+        $post->title = $validatedData['title'];
+        $post->country = $validatedData['country'];
+        $post->start_date = $validatedData['start_date'];
+        $post->end_date = $validatedData['end_date'];
+        $post->description = $validatedData['description'];
+        $post->application_url = $validatedData['application_url'];
+        $post->organization_id = 1;
+        $post->save();
+
+        return Post::orderBy('created_at', 'DESC')->first();
     }
 
     /**
@@ -57,29 +79,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        $validatedData = $request->validate([
-            'title' => 'required|max:225',
-            'country' => 'required|max:225',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'description' => 'required|max:225',
-            'application_url' => 'required|max:225',
-            'organization_id' => 'required|integer',
-        ]);
-
-        $post = new Post;
-        $post->title = $validatedData['title'];
-        $post->country = $validatedData['country'];
-        $post->start_date = $validatedData['start_date'];
-        $post->end_date = $validatedData['end_date'];
-        $post->description = $validatedData['description'];
-        $post->application_url = $validatedData['application_url'];
-        $post->organization_id = $validatedData['organization_id'];
-        $post->save();
-
-        return redirect()->route('posts.index')->with('message', 'Post was created.');
-        */
+        //
     }
 
     /**
@@ -124,8 +124,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //$post->delete();
-
-        //return redirect()->route('posts.index')->with('message', 'Post was deleted.');
+        $post->delete();
+        return redirect()->route('posts.index')->with('message', 'Post was deleted.');
     }
 }

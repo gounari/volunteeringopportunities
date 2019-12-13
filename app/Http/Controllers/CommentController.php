@@ -14,8 +14,7 @@ class CommentController extends Controller
 
     public function apiIndex()
     {
-        $comments = Comment::orderBy('created_at', 'DESC')->get();
-        return $comments;
+        return Comment::orderBy('created_at', 'DESC')->get();
     }
 
     public function apiStore(Request $request)

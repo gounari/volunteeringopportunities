@@ -63,12 +63,7 @@
       <h1 class="my-4">
       </h1>
 
-      <ul 
-      id="posts_list" 
-      :items="posts"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small>
+      <ul>
         <!-- Opportunity Post -->
         <div class="card mb-4" v-for="post in posts" >
         <img class="card-img-top" :src="image(post)" alt="Opportunity image">
@@ -94,38 +89,38 @@
     <div class="card-body">
       <div class="form-group">
         <label for="title">Title</label>
-        <input class="form-control" id="title" placeholder="Title">
+        <input class="form-control" id="title" placeholder="Title" v-model="newPostTitle">
       </div>
       <div class="form-group">
         <label for="country">Country</label>
-        <input class="form-control" id="country" placeholder="Country">
+        <input class="form-control" id="country" placeholder="Country" v-model="newPostCountry">
       </div>
       <div class="form-group">
         <label for="start_date">Start Date</label>
-        <input class="form-control" id="start_date" placeholder="Start Date">
+        <input class="form-control" id="start_date" placeholder="Start Date" v-model="newPostStartDate">
       </div>
       <div class="form-group">
         <label for="end_date">End Date</label>
-        <input class="form-control" id="end_date" placeholder="End Date">
+        <input class="form-control" id="end_date" placeholder="End Date" v-model="newPostEndDate">
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" placeholder="Describe the opportunity..." rows="3"></textarea>
+        <textarea class="form-control" id="description" placeholder="Describe the opportunity..." rows="3" v-model="newPostDescription"></textarea>
       </div>
       <div class="form-group">
         <label for="application_url">Application URL</label>
-        <input class="form-control" id="application_url" placeholder="Application URL">
+        <input class="form-control" id="application_url" placeholder="Application URL" v-model="newPostApplicationUrl">
       </div>
       <div class="form-group">
         <div class="name">Add Image</div>
         <div class="value">
             <div class="input-group js-input-file">
-                <input class="input-file" type="file" name="file_cv" id="file">
+                <input class="input-file" type="file" name="file_cv" id="file" v-on="newPostImage">
             </div>
         </div>
       <span class="input-group-btn">
         <div class="my-3">
-          <button class="btn btn-primary" type="button">Add</button>
+          <button @click="createPost" class="btn btn-primary" type="button">Add</button>
         </div>
       </span>
     </div>
@@ -159,8 +154,13 @@
         el: "#root",
         data: {
             posts: [],
-            perPage: 3,
-        currentPage: 1,
+            newPostTitle: '',
+            newPostCountry: '',
+            newPostStartDate: '',
+            newPostEndDate: '',
+            newPostDescription: '',
+            newPostApplicationUrl: '',
+            newPostImage: '',
         },
         mounted() {
             axios.get("{{ route ('api.posts.index') }}") 
@@ -172,6 +172,33 @@
             })
         },
         methods: {
+          createPost() {
+            axios.post("{{ route ('api.posts.store') }}", {
+                title: this.newPostTitle,
+                country: this.newPostCountry,
+                start_date: this.newPostStartDate,
+                end_date: this.newPostEndDate,
+                description: this.newPostDescription,
+                application_url: this.newPostApplicationUrl,
+                image: this.newPostImage,
+            })
+            .then(response => {
+                this.posts.unshift(response.data);
+                this.newPostTitle = '';
+                this.newPostCountry = '';
+                this.newPostStartDate = '';
+                this.newPostEndDate = '';
+                this.newPostDescription = '';
+                this.newPostApplicationUrl = '';
+                this.newPostImage = '';
+                //this.validationErrors = '';
+            })
+            .catch(error => {
+                if (error.response.status == 422){
+                    //this.validationErrors = error.response.data.errors;
+                }
+            })
+          },
           image: function (post) {
             return '../images/' + post.image;
           },

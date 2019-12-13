@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $with = ['organization'];
+    
     public function organization()
     {
     	return $this->belongsTo('App\Organization');

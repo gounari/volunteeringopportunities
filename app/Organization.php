@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-    protected $guarded = [];
-  
+    protected $with = ['user'];
+
     public function user()
     { 
         return $this->morphOne('App\User', 'profile');
