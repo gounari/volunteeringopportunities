@@ -73,12 +73,18 @@
             Comments
           </div>
             <div class="card-body" id="root">
+                <form>
+                    <div class="form-group">
+                        <textarea name="comment" class="form-control" rows="3" placeholder="Leave a comment"></textarea>
+                    </div>
+                    <a href="#" class="btn btn-success">Leave a Comment</a>
+                </form>
                 <div v-for="comment in comments">
+                    <hr>
                     <p>@{{ comment.comment_text }}</p>
                     <small class="text-muted">Posted by @{{ comment.user.name }} on @{{ comment.created_at }}</small>
-                    <hr>
                 </div>
-            <a href="#" class="btn btn-success">Leave a Comment</a>
+            
           </div>
         </div>
       </div>
