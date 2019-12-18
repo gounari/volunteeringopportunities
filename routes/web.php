@@ -15,16 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users', 'UserController@index')->name('users.index');
-Route::get('/users/{user}', 'UserController@show')->name('users.show');
+Route::get('/users', 'UserController@index')->name('users.index')->middleware('auth');
+Route::get('/users/{user}', 'UserController@show')->name('users.show')->middleware('auth');
 
-Route::get('/comments', 'CommentController@page')->name('comments.index');
+Route::get('/comments', 'CommentController@page')->name('comments.index')->middleware('auth');
 
-Route::get('/posts', 'PostController@page')->name('posts.index');
-Route::get('/posts/create', 'PostController@create')->name('posts.create');
-Route::post('/posts', 'PostController@store')->name('posts.store');
-Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
-Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy');
+Route::get('/posts', 'PostController@page')->name('posts.index')->middleware('auth');
+Route::get('/posts/create', 'PostController@create')->name('posts.create')->middleware('auth');
+Route::post('/posts', 'PostController@store')->name('posts.store')->middleware('auth');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show')->middleware('auth');
+Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy')->middleware('auth');
 
 
 Auth::routes();
