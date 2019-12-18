@@ -75,7 +75,7 @@
             <div class="card-body" id="root">
                 <ul v-for="comment in comments">
                     <p>@{{ comment.comment_text }}</p>
-                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <small class="text-muted">Posted by _ on @{{ comment.created_at }}</small>
                     <hr>
                 </ul>
             <a href="#" class="btn btn-success">Leave a Comment</a>
@@ -106,7 +106,14 @@
             comments: [],
         },
         mounted() {
-            
+            axios.get("{{ route('api.posts.comments', ['post' => $post->id]) }}") 
+            .then(response => {
+              this.comments = response.data; 
+              console.log(response.data); 
+            })
+            .catch(error => {
+                console.log(error); 
+            })
         },
         methods: {
           

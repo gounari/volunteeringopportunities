@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Comment;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -38,6 +39,10 @@ class PostController extends Controller
         $post->save();
 
         return Post::orderBy('created_at', 'DESC')->first();
+    }
+
+    public function comments(Post $post) {
+        return Comment::orderBy('created_at', 'DESC')->where('post_id', $post->id)->get();
     }
 
     /**
