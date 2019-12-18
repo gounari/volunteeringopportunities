@@ -75,9 +75,9 @@
             <div class="card-body" id="root">
                 <form>
                     <div class="form-group">
-                        <textarea name="comment" class="form-control" rows="3" placeholder="Leave a comment"></textarea>
+                        <textarea name="comment" class="form-control" rows="1" placeholder="Leave a comment" v-model="newCommentCommentText"></textarea>
                     </div>
-                    <a href="#" class="btn btn-success">Leave a Comment</a>
+                    <a class="btn btn-success" @click="createComment()">Leave a Comment</a>
                 </form>
                 <div v-for="comment in comments">
                     <hr>
@@ -110,6 +110,7 @@
         el: "#root",
         data: {
             comments: [],
+            newCommentCommentText: '',
         },
         mounted() {
             axios.get("{{ route('api.posts.comments', ['post' => $post->id]) }}") 
@@ -122,7 +123,21 @@
             })
         },
         methods: {
-          
+            createComment() {
+                axios.post("{{ route ('api.comments.store') }}", {
+                    comment_text: this.newCommentCommentText
+                })
+                .then(response => {
+                    this.comments.unshift(response.data);
+                    this.newCommentCommentText = '';
+                    this.validationErrors = '';
+                })
+                .catch(error => {
+                    if (error.response.status == 422){
+                        //this.validationErrors = error.response.data.errors;
+                    }
+                })
+            }
         }
     });
   </script>

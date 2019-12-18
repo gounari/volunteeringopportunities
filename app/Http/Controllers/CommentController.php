@@ -29,7 +29,7 @@ class CommentController extends Controller
         $comment->user_id = 1;
         $comment->save();
 
-        return $comment;
+        return Comment::orderBy('created_at', 'DESC')->first();;
     }
 
     /**
