@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'organization' => [
+            'driver' => 'session',
+            'provider' => 'organizations',
+        ],
+
+        'volunteer' => [
+            'driver' => 'session',
+            'provider' => 'volunteers',
+        ],
     ],
 
     /*
@@ -71,10 +81,15 @@ return [
             'model' => App\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'organizations' => [
+            'driver' => 'eloquent',
+            'model' => App\Organization::class,
+        ],
+
+        'volunteers' => [
+            'driver' => 'eloquent',
+            'model' => App\Volunteer::class,
+        ],
     ],
 
     /*

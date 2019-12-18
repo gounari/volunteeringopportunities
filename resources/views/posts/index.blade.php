@@ -24,6 +24,7 @@
       </ul>
     </div>
 
+    @if (Auth::user()->profile_type === "App\Organization")
     <div class="col-md-4">
       <div class="card my-4">
         <h5 class="card-header">Add opportunity</h5>
@@ -70,6 +71,7 @@
         </div>
       </div>
     </div>
+    @endif
 
   </div>
 @endsection
