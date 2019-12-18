@@ -118,6 +118,8 @@
                 <input class="input-file" type="file" name="file_cv" id="file" v-on="newPostImage">
             </div>
         </div>
+        </div>
+        <validation-errors :errors="validationErrors" v-if="validationErrors"></validation-errors>
       <span class="input-group-btn">
         <div class="my-3">
           <button @click="createPost" class="btn btn-primary" type="button">Add</button>
@@ -149,7 +151,6 @@
   <script src="../js/bootstrap.bundle.min.js"></script>
 
   <script>
-  
     var app = new Vue({
         el: "#root",
         data: {
@@ -161,6 +162,7 @@
             newPostDescription: '',
             newPostApplicationUrl: '',
             newPostImage: '',
+            validationErrors: '',
         },
         mounted() {
             axios.get("{{ route ('api.posts.index') }}") 
@@ -191,11 +193,11 @@
                 this.newPostDescription = '';
                 this.newPostApplicationUrl = '';
                 this.newPostImage = '';
-                //this.validationErrors = '';
+                this.validationErrors = '';
             })
             .catch(error => {
                 if (error.response.status == 422){
-                    //this.validationErrors = error.response.data.errors;
+                    this.validationErrors = error.response.data.errors;
                 }
             })
           },
@@ -208,6 +210,26 @@
           }
         }
     });
+    Vue.component('validation-errors', {
+            data(){
+                return {
+                    
+                }
+            },
+            props: ['errors'],
+            template: `<div v-if="validationErrors">
+                        <ul class="alert alert-danger">
+                            <li v-for="(value, key, index) in validationErrors">@{{ value }}</li>
+                        </ul>
+                    </div>`,
+            computed: {
+                validationErrors(){
+                    let errors = Object.values(this.errors);
+                    errors = errors.flat();
+                    return errors;
+                }
+            }
+        });
   </script>
 </body>
 
