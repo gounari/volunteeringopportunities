@@ -74,6 +74,7 @@
           </div>
             <div class="card-body" id="root">
                 <form>
+                    @csrf
                     <div class="form-group">
                         <textarea name="comment" class="form-control" rows="1" placeholder="Leave a comment" v-model="newCommentCommentText"></textarea>
                     </div>

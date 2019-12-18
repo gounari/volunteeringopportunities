@@ -87,6 +87,7 @@
 <div class="card my-4">
   <h5 class="card-header">Add opportunity</h5>
     <div class="card-body">
+      @csrf
       <div class="form-group">
         <label for="title">Title</label>
         <input class="form-control" id="title" placeholder="Title" v-model="newPostTitle">
