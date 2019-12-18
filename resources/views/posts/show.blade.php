@@ -78,6 +78,7 @@
                         <textarea name="comment" class="form-control" rows="1" placeholder="Leave a comment" v-model="newCommentCommentText"></textarea>
                     </div>
                     <a class="btn btn-success" @click="createComment()">Leave a Comment</a>
+                    <validation-errors :errors="validationErrors" v-if="validationErrors"></validation-errors>
                 </form>
                 <div v-for="comment in comments">
                     <hr>
@@ -112,6 +113,7 @@
             comments: [],
             newCommentCommentText: '',
             current_post_id: '',
+            validationErrors: '',
         },
         mounted() {
             axios.get("{{ route('api.posts.comments', ['post' => $post->id]) }}") 
@@ -136,12 +138,32 @@
                 })
                 .catch(error => {
                     if (error.response.status == 422){
-                        //this.validationErrors = error.response.data.errors;
+                        this.validationErrors = error.response.data.errors;
                     }
                 })
             }
         }
     });
+    Vue.component('validation-errors', {
+            data(){
+                return {
+                    
+                }
+            },
+            props: ['errors'],
+            template: `<div v-if="validationErrors">
+                        <ul class="alert alert-danger">
+                            <li v-for="(value, key, index) in validationErrors">@{{ value }}</li>
+                        </ul>
+                    </div>`,
+            computed: {
+                validationErrors(){
+                    let errors = Object.values(this.errors);
+                    errors = errors.flat();
+                    return errors;
+                }
+            }
+        });
   </script>
 </body>
 
