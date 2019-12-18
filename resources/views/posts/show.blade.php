@@ -73,11 +73,11 @@
             Comments
           </div>
             <div class="card-body" id="root">
-                <ul v-for="comment in comments">
+                <div v-for="comment in comments">
                     <p>@{{ comment.comment_text }}</p>
-                    <small class="text-muted">Posted by _ on @{{ comment.created_at }}</small>
+                    <small class="text-muted">Posted by @{{ comment.user.name }} on @{{ comment.created_at }}</small>
                     <hr>
-                </ul>
+                </div>
             <a href="#" class="btn btn-success">Leave a Comment</a>
           </div>
         </div>
