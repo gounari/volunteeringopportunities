@@ -111,12 +111,13 @@
         data: {
             comments: [],
             newCommentCommentText: '',
+            current_post_id: '',
         },
         mounted() {
             axios.get("{{ route('api.posts.comments', ['post' => $post->id]) }}") 
             .then(response => {
               this.comments = response.data; 
-              console.log(response.data); 
+              this.current_post_id = response.data[0].post_id;
             })
             .catch(error => {
                 console.log(error); 
@@ -125,7 +126,8 @@
         methods: {
             createComment() {
                 axios.post("{{ route ('api.comments.store') }}", {
-                    comment_text: this.newCommentCommentText
+                    comment_text: this.newCommentCommentText,
+                    post_id: this.current_post_id,
                 })
                 .then(response => {
                     this.comments.unshift(response.data);

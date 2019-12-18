@@ -19,13 +19,14 @@ class CommentController extends Controller
 
     public function apiStore(Request $request)
     {
-        $this->validate($request, [
+        $validatedData = $request->validate ([
             'comment_text' => 'required|max:225',
+            'post_id' => 'required',
         ]);
 
         $comment = new Comment;
-        $comment->comment_text = $request['comment_text'];
-        $comment->post_id = 1;
+        $comment->comment_text = $validatedData['comment_text'];
+        $comment->post_id = $validatedData['post_id'];
         $comment->user_id = 1;
         $comment->save();
 
