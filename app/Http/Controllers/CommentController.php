@@ -94,14 +94,16 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate ([
-            'comment_text' => 'required|max:225',
+            'comment' => 'required|max:225',
         ]);
 
-        $comment->comment_text = $validatedData['comment_text'];
+        $comment = Comment::find($id);
+        $comment->comment_text = $validatedData['comment'];
         $comment->save();
+        
         return redirect()->route('posts.show', ['post' => $comment->post_id]);
     }
 
