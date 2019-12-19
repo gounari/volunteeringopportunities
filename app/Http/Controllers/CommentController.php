@@ -9,7 +9,7 @@ class CommentController extends Controller
 {
     public function page()
     {
-        return view('comments.index');
+        return view('comments.show');
     }
 
     public function apiIndex()
@@ -73,7 +73,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        return view('comments.show', ['comment' => $comment]);
     }
 
     /**
@@ -107,6 +107,6 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        Comment::where('id', $comment->id)->delete();
     }
 }

@@ -33,8 +33,8 @@
                 <hr>
                 <p>@{{ comment.comment_text }}</p>
                 <small class="text-muted">Posted by @{{ comment.user.name }} on @{{ comment.created_at }}</small>
-                <button v-if="commentBelongsTo(comment)" @click="" type="button" class="btn btn-sm btn-outline-danger pull-right">delete</button>
-                <button v-if="commentBelongsTo(comment)" @click="" type="button" class="btn btn-sm btn-outline-secondary pull-right">Edit </button>
+                <a v-if="commentBelongsTo(comment)" :href="editComment(comment)" class="btn btn-sm btn-outline-danger pull-right">Delete &rarr;</a>
+                <a v-if="commentBelongsTo(comment)" :href="editComment(comment)" class="btn btn-sm btn-outline-secondary pull-right">Edit &rarr;</a>
             </div>
           </div>
         </div>
@@ -44,8 +44,6 @@
   <meta name="user-id" content="{{ Auth::user()->id }}">
   <meta name="post-id" content="{{ $post->id }}">
   @endsection
-
- 
 
   @push('scripts')
   <script>
@@ -90,6 +88,10 @@
               return true;
             }
             return false;
+          },
+          editComment: function(comment) {
+            console.log("{{ route('comments.show', ['comment' => 0]) }}" + comment.id);
+            return "{{ route('comments.show', ['comment' => 0]) }}" + comment.id ;
           }
         }
     });
