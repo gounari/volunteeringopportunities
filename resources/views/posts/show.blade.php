@@ -8,7 +8,7 @@
       <div class="col-lg-8" id="root">
 
         <div class="card my-4" id="root1">
-          <img class="card-img-top" src="http://placehold.it/900x400" alt="">
+          <img class="card-img-top" :src="image()" alt="Opportunity Image">
           <div class="card-body">
             <h3 class="card-title">{{ $post->title }}</h3>
             <h4>Posted by: {{ $post->organization->user->name }}</h4>
@@ -44,6 +44,7 @@
   <meta name="user-id" content="{{ Auth::user()->id }}">
   <meta name="post-id" content="{{ $post->id }}">
   <meta name="post-user" content="{{ $post->organization->user->id }}">
+  <meta name="post-image" content="{{ $post->image }}">
   @endsection
 
   @push('scripts')
@@ -51,6 +52,7 @@
     Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
     Vue.prototype.$postId = document.querySelector("meta[name='post-id']").getAttribute('content');
     Vue.prototype.$postUser = document.querySelector("meta[name='post-user']").getAttribute('content');
+    Vue.prototype.$postImage = document.querySelector("meta[name='post-image']").getAttribute('content');
     var app = new Vue({
         el: "#root",
         data: {
@@ -103,6 +105,9 @@
           editPost() {
             console.log("{{ route('posts.edit', ['post' => 0]) }}" + this.$postId);
             return "{{ route('posts.edit', ['post' => 0]) }}" + this.$postId;
+          },
+          image() {
+          return '../images/' + this.$postImage;
           }
         }
     });
