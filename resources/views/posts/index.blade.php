@@ -17,8 +17,7 @@
                 <a :href="show(post)" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">
-            Posted on @{{ post.created_at}} by
-                <a href="#">@{{ post.organization.user.name }}</a>
+            Posted on @{{ post.created_at}} by @{{ post.organization.user.name }}</a>
             </div>
         </div>
       </ul>
@@ -74,10 +73,12 @@
     @endif
 
   </div>
+  <meta name="user-id" content="{{ Auth::user()->id }}">
 @endsection
 
 @push('scripts')
 <script>
+  Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
   var app = new Vue({
       el: "#root",
       data: {
@@ -102,6 +103,7 @@
       },
       methods: {
         createPost() {
+          console.log(this.$userId);
           axios.post("{{ route ('api.posts.store') }}", {
               title: this.newPostTitle,
               country: this.newPostCountry,
@@ -109,6 +111,7 @@
               end_date: this.newPostEndDate,
               description: this.newPostDescription,
               application_url: this.newPostApplicationUrl,
+              user_id: this.$userId,
               image: this.newPostImage,
           })
           .then(response => {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -26,6 +27,7 @@ class PostController extends Controller
             'end_date' => 'required|date',
             'description' => 'required|max:225',
             'application_url' => 'required|max:225',
+            'user_id' => 'required',
         ]);
 
         $post = new Post;
@@ -35,7 +37,8 @@ class PostController extends Controller
         $post->end_date = $validatedData['end_date'];
         $post->description = $validatedData['description'];
         $post->application_url = $validatedData['application_url'];
-        $post->organization_id = 1;
+        $user = User::where('id', $validatedData['user_id'])->first();
+        $post->organization_id = $user->profile_id;
         $post->save();
 
         return Post::orderBy('created_at', 'DESC')->first();
@@ -63,17 +66,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        /*
-        $organizations = Organization::all();
-        
-        $c = collect();
-        foreach ($organizations as $organization) {
-            $c->add($organization->user);
-        }
-        $names = collect($c)->sortBy('name');
-
-        return view('posts.create', ['organizations' => $names]);
-        */
+        //
     }
 
     /**
