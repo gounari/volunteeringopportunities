@@ -111,7 +111,25 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate ([
+            'title' => 'required|max:225',
+            'country' => 'required|max:225',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'description' => 'required|max:225',
+            'application_url' => 'required|max:225',
+        ]);
+
+        $post = Post::find($id);
+        $post->title = $validatedData['title'];
+        $post->country = $validatedData['country'];
+        $post->start_date = $validatedData['start_date'];
+        $post->end_date = $validatedData['end_date'];
+        $post->description = $validatedData['description'];
+        $post->application_url = $validatedData['application_url'];
+        $post->save();
+        
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
