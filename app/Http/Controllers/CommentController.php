@@ -22,12 +22,13 @@ class CommentController extends Controller
         $validatedData = $request->validate ([
             'comment_text' => 'required|max:225',
             'post_id' => 'required',
+            'user_id' => 'required',
         ]);
 
         $comment = new Comment;
         $comment->comment_text = $validatedData['comment_text'];
         $comment->post_id = $validatedData['post_id'];
-        $comment->user_id = 1;
+        $comment->user_id = $validatedData['user_id'];
         $comment->save();
 
         return Comment::orderBy('created_at', 'DESC')->first();;

@@ -39,23 +39,27 @@
       </div>
     </div>
   </div>
+  <meta name="user-id" content="{{ Auth::user()->id }}">
+  <meta name="post-id" content="{{ $post->id }}">
   @endsection
+
+ 
 
   @push('scripts')
   <script>
+    Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
+    Vue.prototype.$postId = document.querySelector("meta[name='post-id']").getAttribute('content');
     var app = new Vue({
         el: "#root",
         data: {
           comments: [],
           newCommentCommentText: '',
-          current_post_id: '',
           validationErrors: '',
         },
         mounted() {
           axios.get("{{ route('api.posts.comments', ['post' => $post->id]) }}") 
           .then(response => {
             this.comments = response.data;
-            this.current_post_id = response.data[0].post_id;
           })
           .catch(error => {
             console.log(error); 
@@ -65,7 +69,8 @@
           createComment() {
             axios.post("{{ route ('api.comments.store') }}", {
               comment_text: this.newCommentCommentText,
-              post_id: this.current_post_id,
+              post_id: this.$postId,
+              user_id: this.$userId,
             })
             .then(response => {
               this.comments.unshift(response.data);
