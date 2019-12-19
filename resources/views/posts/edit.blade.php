@@ -38,7 +38,7 @@
             <div class="name">Add Image</div>
             <div class="value">
                 <div class="input-group js-input-file">
-                {{Form::file('image', $post->image, ['class' => 'input-file', 'type' => 'file'])}}
+                {{Form::file('image')}}
                 </div>
             </div>
             </div>

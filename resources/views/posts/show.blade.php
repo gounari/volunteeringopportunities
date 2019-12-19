@@ -5,10 +5,10 @@
 
     <div class="row">
 
-      <div class="col-lg-9" id="root">
+      <div class="col-lg-8" id="root">
 
-        <div class="card mt-4" id="root1">
-          <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+        <div class="card my-4" id="root1">
+          <img class="card-img-top" src="http://placehold.it/900x400" alt="">
           <div class="card-body">
             <h3 class="card-title">{{ $post->title }}</h3>
             <h4>Posted by: {{ $post->organization->user->name }}</h4>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Comment;
 use App\User;
+use Image;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -118,7 +119,21 @@ class PostController extends Controller
             'end_date' => 'required|date',
             'description' => 'required|max:225',
             'application_url' => 'required|max:225',
+            'image' => 'image|required|max:1999',
         ]);
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filenameWithExt = $image->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $image->getClientOriginalExtension();
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            $destinationPath = public_path('/images');
+            $img = Image::make($image->path());
+            $img->resize(750, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$fileNameToStore);
+        }
 
         $post = Post::find($id);
         $post->title = $validatedData['title'];
@@ -127,6 +142,7 @@ class PostController extends Controller
         $post->end_date = $validatedData['end_date'];
         $post->description = $validatedData['description'];
         $post->application_url = $validatedData['application_url'];
+        $post->image = $fileNameToStore;
         $post->save();
         
         return redirect()->route('posts.show', ['post' => $post->id]);
