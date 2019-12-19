@@ -5,14 +5,15 @@
 
     <div class="row">
 
-      <div class="col-lg-9">
+      <div class="col-lg-9" id="root">
 
-        <div class="card mt-4">
+        <div class="card mt-4" id="root1">
           <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
           <div class="card-body">
             <h3 class="card-title">{{ $post->title }}</h3>
             <h4>Posted by: {{ $post->organization->user->name }}</h4>
             <p class="card-text">{{ $post->description }}</p>
+            <a v-if="postBelongsTo()" :href="editPost()" class="btn btn-sm btn-outline-secondary pull-right">Edit &rarr;</a>
           </div>
         </div>
         
@@ -20,7 +21,7 @@
           <div class="card-header">
             Comments
           </div>
-          <div class="card-body" id="root">
+          <div class="card-body" >
             <form>
                 @csrf
                 <div class="form-group">
@@ -42,12 +43,14 @@
   </div>
   <meta name="user-id" content="{{ Auth::user()->id }}">
   <meta name="post-id" content="{{ $post->id }}">
+  <meta name="post-user" content="{{ $post->organization->user->id }}">
   @endsection
 
   @push('scripts')
   <script>
     Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
     Vue.prototype.$postId = document.querySelector("meta[name='post-id']").getAttribute('content');
+    Vue.prototype.$postUser = document.querySelector("meta[name='post-user']").getAttribute('content');
     var app = new Vue({
         el: "#root",
         data: {
@@ -88,9 +91,18 @@
             }
             return false;
           },
+          postBelongsTo() {
+            if (this.$userId == this.$postUser) {
+              return true;
+            }
+            return false;
+          },
           editComment: function(comment) {
-            console.log("{{ route('comments.show', ['comment' => 0]) }}" + comment.id);
             return "{{ route('comments.show', ['comment' => 0]) }}" + comment.id ;
+          },
+          editPost() {
+            console.log("{{ route('posts.edit', ['post' => 0]) }}" + this.$postId);
+            return "{{ route('posts.edit', ['post' => 0]) }}" + this.$postId;
           }
         }
     });
