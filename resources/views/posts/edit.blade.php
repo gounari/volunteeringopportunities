@@ -46,6 +46,13 @@
             {{Form::submit('Update', ['class'=>'btn btn-sm btn-outline-secondary'])}}
             {!! Form::close() !!}
 
+            <form method="POST"
+                action="{{ route('posts.destroy', ['post' => $post]) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-outline-danger pull-right">Delete</button>
+            </form>
+
           @else
           You are not authorized to edit this post.
           <a href="{{ route('posts.index') }}">Return to posts list.</a>

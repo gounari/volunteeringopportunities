@@ -29,6 +29,7 @@ Route::post('/posts', 'PostController@store')->name('posts.store')->middleware('
 Route::get('/posts/{post}', 'PostController@show')->name('posts.show')->middleware('auth');
 Route::get('/posts/edit/{post}', 'PostController@edit')->name('posts.edit')->middleware('auth');
 Route::put('/posts/edit/{post}', 'PostController@update')->name('posts.update')->middleware('auth');
+Route::delete('/posts/edit/{post}', 'PostController@destroy')->name('posts.destroy')->middleware('auth');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
