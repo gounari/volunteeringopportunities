@@ -96,7 +96,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $validatedData = $request->validate ([
+            'comment_text' => 'required|max:225',
+        ]);
+
+        $comment->comment_text = $validatedData['comment_text'];
+        $comment->save();
+        return redirect()->route('posts.show', ['post' => $comment->post_id]);
     }
 
     /**
@@ -107,6 +113,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        Comment::where('id', $comment->id)->delete();
+        $post_id = $comment->post_id;
+        $comment->delete();
+        return redirect()->route('posts.show', ['post' => $post_id]);
     }
 }

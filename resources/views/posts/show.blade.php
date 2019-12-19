@@ -33,7 +33,6 @@
                 <hr>
                 <p>@{{ comment.comment_text }}</p>
                 <small class="text-muted">Posted by @{{ comment.user.name }} on @{{ comment.created_at }}</small>
-                <a v-if="commentBelongsTo(comment)" :href="editComment(comment)" class="btn btn-sm btn-outline-danger pull-right">Delete &rarr;</a>
                 <a v-if="commentBelongsTo(comment)" :href="editComment(comment)" class="btn btn-sm btn-outline-secondary pull-right">Edit &rarr;</a>
             </div>
           </div>

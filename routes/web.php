@@ -20,6 +20,8 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show')->middlewa
 
 Route::get('/comments', 'CommentController@page')->name('comments.index')->middleware('auth');
 Route::get('/comments/{comment}', 'CommentController@show')->name('comments.show')->middleware('auth');
+Route::delete('/comments/{comment}', 'CommentController@destroy')->name('comments.destroy')->middleware('auth');
+Route::put('/comments/{comment}', 'CommentController@update')->name('comments.update')->middleware('auth');
 
 Route::get('/posts', 'PostController@page')->name('posts.index')->middleware('auth');
 Route::get('/posts/create', 'PostController@create')->name('posts.create')->middleware('auth');
