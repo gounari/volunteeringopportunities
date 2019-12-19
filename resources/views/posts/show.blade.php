@@ -33,6 +33,8 @@
                 <hr>
                 <p>@{{ comment.comment_text }}</p>
                 <small class="text-muted">Posted by @{{ comment.user.name }} on @{{ comment.created_at }}</small>
+                <button v-if="commentBelongsTo(comment)" @click="" type="button" class="btn btn-sm btn-outline-danger pull-right">delete</button>
+                <button v-if="commentBelongsTo(comment)" @click="" type="button" class="btn btn-sm btn-outline-secondary pull-right">Edit </button>
             </div>
           </div>
         </div>
@@ -82,6 +84,12 @@
                   this.validationErrors = error.response.data.errors;
                 }
             })
+          },
+          commentBelongsTo: function(comment) {
+            if (this.$userId == comment.user.id) {
+              return true;
+            }
+            return false;
           }
         }
     });
