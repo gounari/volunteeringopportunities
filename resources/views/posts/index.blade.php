@@ -53,14 +53,6 @@
             <label for="application_url">Application URL</label>
             <input class="form-control" id="application_url" placeholder="Application URL" v-model="newPostApplicationUrl">
           </div>
-          <div class="form-group">
-            <div class="name">Add Image</div>
-            <div class="value">
-                <div class="input-group js-input-file">
-                    <input class="input-file" type="file" name="file_cv" id="file" v-on="newPostImage">
-                </div>
-            </div>
-            </div>
             <validation-errors :errors="validationErrors" v-if="validationErrors"></validation-errors>
           <span class="input-group-btn">
             <div class="my-3">
@@ -89,7 +81,6 @@
           newPostEndDate: '',
           newPostDescription: '',
           newPostApplicationUrl: '',
-          newPostImage: '',
           validationErrors: '',
       },
       mounted() {
@@ -103,7 +94,6 @@
       },
       methods: {
         createPost() {
-          console.log(this.$userId);
           axios.post("{{ route ('api.posts.store') }}", {
               title: this.newPostTitle,
               country: this.newPostCountry,
@@ -112,7 +102,6 @@
               description: this.newPostDescription,
               application_url: this.newPostApplicationUrl,
               user_id: this.$userId,
-              image: this.newPostImage,
           })
           .then(response => {
               this.posts.unshift(response.data);
@@ -122,7 +111,6 @@
               this.newPostEndDate = '';
               this.newPostDescription = '';
               this.newPostApplicationUrl = '';
-              this.newPostImage = '';
               this.validationErrors = '';
           })
           .catch(error => {
@@ -132,7 +120,10 @@
           })
         },
         image: function (post) {
-          return '../images/' + post.image;
+          if (post.image != null) {
+            return '../images/' + post.image;
+          }
+          return '../images/default.jpg';
         },
         show: function (post) {
           var id = post.id;

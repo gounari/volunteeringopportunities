@@ -103,11 +103,13 @@
             return "{{ route('comments.show', ['comment' => 0]) }}" + comment.id ;
           },
           editPost() {
-            console.log("{{ route('posts.edit', ['post' => 0]) }}" + this.$postId);
             return "{{ route('posts.edit', ['post' => 0]) }}" + this.$postId;
           },
           image() {
-          return '../images/' + this.$postImage;
+            if (this.$postImage != null) {
+              return '../images/' + this.$postImage;
+            }
+            return '../images/default.jpg';
           }
         }
     });
